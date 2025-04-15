@@ -52,9 +52,9 @@ public class DoctorPatientServiceTest {
 	        dp1 = new DoctorPatient(1, d1, p1);
 	        dp2 = new DoctorPatient(2, d1, p2);
 	    }
-	    
+	    //test case 1 for the pattiensrs
 	    @Test
-	    public void testGetAllPatientsByDoctorId() {
+	    public void getAllPatientsByDoctorIdTest() {
 	       //give the doctor patinetws we faked
 	    	
 	    	//use case 1 we given valid doctor id
@@ -63,6 +63,7 @@ public class DoctorPatientServiceTest {
 	        List<Integer> expectedPatientIds = Arrays.asList(p1.getId(), p2.getId());
 	        
 	        //give the ids of the patients 
+	        
 	        List<Patient> expectedPatients = Arrays.asList(p1, p2);
 
 	        // fke the call by method 
@@ -70,13 +71,14 @@ public class DoctorPatientServiceTest {
 	        when(pr.findAllById(expectedPatientIds)).thenReturn(expectedPatients);
 
 	        // Actual call of the method
+	        //get the expected list
 	        List<Patient> result = doctorPatientService.getAllPatientsByDoctorId(1);
 
 	        // get the sixe of patients herw we get 2 
 	        assertEquals(2, result.size());
 	        //get thename based on listindex 0,1
 	        assertEquals("karthik", result.get(0).getName());
-	        assertEquals("melvin", result.get(1).getName());
+	        assertEquals("melvin", result.get(1).getName());         //expected and original is given for thus method
 
 	        // how many times db is called
 	        verify(dpr, times(1)).findAllDoctorById(1);
@@ -85,19 +87,41 @@ public class DoctorPatientServiceTest {
 	        //use case 2 we givem invalid doctror id
 	        
 	        
-	        // Mocking: no doctor-patient links found
+	        //  no doctor-patient links found
 	        when(dpr.findAllDoctorById(3497947)).thenReturn(List.of());
 
-	        // Actual call
+	        
 	        List<Patient> no_result = doctorPatientService.getAllPatientsByDoctorId(3497947);
 
-	        // Assertions
+	        
 	        assertEquals(0, no_result.size(), "Expected empty list for invalid doctor ID");
 
 	        // how many times db is called
 	        verify(dpr, times(1)).findAllDoctorById(3497947);
 	        
 	    }
+	    //test case 2 for appointemnet check
+	    @Test
+	    public void makeAppointmentTest() {
+	        //we have the mocked objects right there d1, p1 add them here 
+	        DoctorPatient app = new DoctorPatient();
+	        app.setDoctor(d1);
+	        app.setPatient(p1);
+
+	        // when save method called give me app
+	        when(dpr.save(app)).thenReturn(app);
+
+	        //this is actual
+	        DoctorPatient expected = doctorPatientService.makeappointment(app);
+
+	        
+	        assertEquals(d1, expected.getDoctor());
+	        assertEquals(p1, expected.getPatient());
+
+	        // check how mamy tims dbi s called
+	        verify(dpr, times(1)).save(app);
+	    }
+
 
 	
 
