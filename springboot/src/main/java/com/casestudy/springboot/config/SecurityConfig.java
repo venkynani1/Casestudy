@@ -39,6 +39,14 @@ public class SecurityConfig {
 	                // Login just returns logged in user, should be authenticated
 	                .requestMatchers("/api/auth/login").authenticated()
 	                .requestMatchers("/api/auth/user/details").authenticated()
+	                .requestMatchers("/api/doctorpatient/postappointment/{dId}/{pId}").permitAll()
+	                
+
+	                .requestMatchers("/api/doctorpatient/patientsbydoctor/{dId}").hasAuthority("DOCTOR")
+
+	                .requestMatchers("/api/patient/addpatient").hasAuthority("PATIENT")
+
+	                
 
 	                
 			)
