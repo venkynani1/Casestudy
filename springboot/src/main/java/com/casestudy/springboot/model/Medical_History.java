@@ -57,4 +57,8 @@ public class Medical_History {
 		this.no_of_years = no_of_years;
 		this.current_medication = current_medication;
 	}
+	public Medical_History() {
+	    super();
+	}
+
 }
