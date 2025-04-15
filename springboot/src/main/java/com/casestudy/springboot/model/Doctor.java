@@ -21,7 +21,7 @@ public class Doctor {
 	    @Column(nullable = false)
 	    private String name;
 	    
-	            /*enum type*/ 
+	     /*enum type*/ 
 	    @Enumerated(EnumType.STRING)
 	    @Column(nullable = false)
 	    private Speciality speciality;
@@ -34,10 +34,6 @@ public class Doctor {
 		}
 
 		
-
-
-
-
 		public Doctor(String name, Speciality speciality, User user) {
 			super();
 			this.name = name;
@@ -45,8 +41,6 @@ public class Doctor {
 			this.user = user;
 			
 		}
-
-
 
 		public Doctor(int id, String name, Speciality speciality, User user) {
 			super();
@@ -57,32 +51,19 @@ public class Doctor {
 			
 		}
 
-
-
-		
-
-
-
-		public Doctor(int id, String name, Speciality speciality) {
+public Doctor(int id, String name, Speciality speciality) {
 			super();
 			this.id = id;
 			this.name = name;
 			this.speciality = speciality;
 		}
 
-
-
-
-
-
-
 		//one to one relation with user
 	    @OneToOne
 	    private User user;
 	   
 	   
-
-		public User getUser() {
+	public User getUser() {
 			return user;
 		}
 

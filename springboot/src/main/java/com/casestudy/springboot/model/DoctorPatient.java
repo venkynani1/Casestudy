@@ -11,17 +11,18 @@ public class DoctorPatient {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-	
+	//relatipnoships
 	@ManyToOne
 	private Doctor doctor;
+	@ManyToOne
+	private Patient patient;
 	public DoctorPatient(int id, Doctor doctor, Patient patient) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
 		this.patient = patient;
 	}
-	@ManyToOne
-	private Patient patient;
+	
 	public int getId() {
 		return id;
 	}
