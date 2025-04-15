@@ -21,14 +21,11 @@ public class PatientController {
 
 	@Autowired
 	private PatientService ps;
+	
 	@PostMapping("/addpatient")
-	public Patient registerPatient(@RequestBody Patient patient, 
-	                               @RequestBody Medical_History medicalHistory, 
-	                               Principal principal) {
-//get the username from login
-		 
-		String username=principal.getName();
-	    return ps.addPatientWithHistory(patient, medicalHistory, username);
+	public Patient registerPatient(@RequestBody Patient patient, Principal principal) {
+		//get the username after logging ign
+	    String username = principal.getName();
+	    return ps.addPatientWithHistory(patient, username);
 	}
-
 }

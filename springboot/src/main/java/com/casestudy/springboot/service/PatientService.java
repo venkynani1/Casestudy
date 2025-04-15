@@ -22,21 +22,32 @@ public class PatientService {
 
     @Autowired
     private AuthRepository authrepo;
-	public Patient addPatientWithHistory(Patient patient, Medical_History medicalHistory, String username) {
-		//gettomg the userbyusrname
-		 User user = authrepo.findByUsername(username);
-				 if (user == null) {
-				        throw new RuntimeException("User not found");
-				    }
-		 
-		 //add use to the patient
-		 patient.setUser(user);
-		 //we have the medial history save to that db first
-		mhr.save(medicalHistory);
-		 //add medicalg histpry now to the patient after saving it //now after adding the medical history use the set to patinet mediacl hostry
-		 patient.setMedical_history(medicalHistory);
-		return pr.save(patient);
-	}
+
+public Patient addPatientWithHistory(Patient patient, String username) {
+    // get the user by username
+    User user = authrepo.findByUsername(username);
+    if (user == null) {
+        throw new RuntimeException("User not found");
+    }
+
+    // set the user to the patient and add
+    patient.setUser(user);
+
+    // get medical history from patient 
+    Medical_History medicalHistory = patient.getMedical_history();
+    
+    if (medicalHistory != null) {
+        // save the medical history first
+        mhr.save(medicalHistory);
+        patient.setMedical_history(medicalHistory); 
+    } else {
+        throw new RuntimeException("Medical History for that patient  is required");
+    }
+
+    // save patient with user and medical history
+    return pr.save(patient);
 	
+}
+
 }
 
